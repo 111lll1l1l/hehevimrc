@@ -1,8 +1,12 @@
 se shm=atI
 
-se ts=4 sw=4
+se mouse=a
+
+se ts=4 sw=4 sts=4
 se ai si
 filetype indent on
+
+au BufNewFile,BufRead *.py se et
 
 se is hls
 
@@ -46,9 +50,19 @@ nmap <leader>fs :w<CR>
 nmap <leader>qq :q<CR>
 nmap <leader>qQ :q!<CR>
 nmap <leader>y ggVG"+y
-nmap <leader>c :call CR()<CR>
-func! CR()
-exec "w"
-exec "!g++ %"
-exec "! ./a.out"
+nmap <leader>te :tabe 
+nmap <leader>th :tabm -1<CR>
+nmap <leader>tl :tabm +1<CR>
+nmap <leader>tq :tabd q<CR>
+nmap <leader>tQ :tabd q!<CR>
+
+nmap <leader>c :call Compile()<CR>
+func! Compile()
+	exec "w"
+	if &filetype == 'cpp'
+		exec "!g++ %"
+		exec "! ./a.out"
+	elseif &filetype == 'python'
+		exec "!python3 %"
+	endif
 endfunc
